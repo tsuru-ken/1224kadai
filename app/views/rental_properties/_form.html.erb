@@ -1,0 +1,86 @@
+<%= form_with(model: rental_property, local: true) do |form| %>
+  <% if rental_property.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rental_property.errors.count, "error") %> prohibited this rental_property from being saved:</h2>
+
+      <ul>
+        <% rental_property.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rent %>
+    <%= form.number_field :rent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :age %>
+    <%= form.number_field :age %>
+  </div>
+
+  <div class="field">
+    <%= form.label :note %>
+    <%= form.text_area :note %>
+  </div>
+
+  <hr>
+<p><%= "最寄駅登録数:#{@station_num ||=0}" %> </p>
+<% if action_name == "new" %>
+  <p>最寄駅1</p>
+  <%= form.fields_for :stations do |station| %>
+    <%= station.label :駅名%>
+    <%= station.text_field :station_name%>
+
+    <%= station.label :路線名%>
+    <%= station.text_field :line_name%>
+
+    <%= station.label :徒歩分数%>
+    <%= station.text_field :time%>分
+  <% end %>
+
+  <p>最寄駅2</p>
+  <%= form.fields_for :stations do |station| %>
+    <%= station.label :駅名%>
+    <%= station.text_field :station_name%>
+
+    <%= station.label :路線名%>
+    <%= station.text_field :line_name%>
+
+    <%= station.label :徒歩分数%>
+    <%= station.text_field :time%>分
+  <% end%>
+
+<% else%>
+  <% couter = 1 %>
+  <%= form.fields_for :stations do |station| %>
+  <P><%= "最寄駅#{couter}" %></p>
+    <%= station.label :駅名%>
+    <%= station.text_field :station_name%>
+
+    <%= station.label :路線名%>
+    <%= station.text_field :line_name%>
+
+    <%= station.label :徒歩分数%>
+    <%= station.text_field :time%>分
+  <% end%>
+<% end%>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
